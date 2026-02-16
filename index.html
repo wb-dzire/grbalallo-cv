@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Giuzwald Balallo — IT Specialist</title>
+
+  <style>
+    :root{
+      --bg:#070a14; --bg2:#0b1022;
+      --panel:#0f1730; --panel2:#0b122b;
+      --text:#eaf0ff; --muted:#b6c0ea; --muted2:#8b97c8;
+      --line:rgba(255,255,255,.12);
+      --chip:rgba(255,255,255,.07);
+      --shadow:0 18px 55px rgba(0,0,0,.38);
+      --shadow2:0 10px 28px rgba(0,0,0,.26);
+
+      --a:#7c5cff; --a2:#22c55e; --a3:#38bdf8;
+
+      --font: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;
+      --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+
+      --max: 1140px;
+      --sidebar: 310px;
+      --r: 22px;
+    }
+
+    [data-theme="light"]{
+      --bg:#eef2ff; --bg2:#f7f9ff;
+      --panel:#ffffff; --panel2:#ffffff;
+      --text:#0f172a; --muted:#475569; --muted2:#64748b;
+      --line:rgba(15,23,42,.12);
+      --chip:rgba(15,23,42,.06);
+      --shadow:0 18px 55px rgba(2,6,23,.12);
+      --shadow2:0 10px 28px rgba(2,6,23,.10);
+      --a:#4f46e5; --a2:#16a34a; --a3:#0284c7;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1050px 600px at 14% 0%, color-mix(in oklab, var(--a) 26%, transparent), transparent 56%),
+        radial-gradient(980px 600px at 92% 10%, color-mix(in oklab, var(--a2) 18%, transparent), transparent 56%),
+        radial-gradient(860px 540px at 60% 110%, color-mix(in oklab, var(--a3) 14%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .chrome{
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        radial-gradient(900px 220px at 50% 0%, rgba(255,255,255,.06), transparent 70%),
+        radial-gradient(720px 260px at 0% 30%, rgba(255,255,255,.05), transparent 65%),
+        radial-gradient(720px 260px at 100% 40%, rgba(255,255,255,.05), transparent 65%);
+      opacity:.9;
+    }
+
+    .wrap{ max-width: var(--max); margin:0 auto; padding: 18px 16px 60px; }
+
+    /* Topbar */
+    .topbar{
+      position: sticky;
+      top: 14px;
+      z-index: 40;
+
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px; flex-wrap: wrap;
+
+      padding: 14px 14px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 2px);
+      background: color-mix(in oklab, var(--panel) 86%, transparent);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{ display:flex; align-items:center; gap: 12px; min-width: 260px; }
+    .brand h1{ margin:0; font-size: 14px; font-weight: 950; letter-spacing:.2px; }
+    .brand p{ margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+
+    /* Profile photo */
+    .avatar{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      background: var(--chip);
+      flex: 0 0 auto;
+    }
+    .avatar-lg{
+      width: 92px;
+      height: 92px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      background: var(--chip);
+      display:block;
+      margin: 0 auto 10px;
+    }
+
+    .actions{ display:flex; gap: 10px; flex-wrap: wrap; justify-content:flex-end; align-items:center; }
+
+    /* Buttons */
+    .btn{
+      appearance:none;
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 80%, transparent);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 880;
+      letter-spacing:.16px;
+      cursor:pointer;
+      display:inline-flex; align-items:center; gap: 8px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
+      text-decoration:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: color-mix(in oklab, var(--text) 20%, transparent);
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
+    .btn:active{ transform: translateY(0) scale(.99); }
+    .btn.primary{
+      border-color: color-mix(in oklab, var(--a) 60%, transparent);
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a) 34%, transparent), color-mix(in oklab, var(--a) 10%, transparent));
+    }
+    .btn.good{
+      border-color: color-mix(in oklab, var(--a2) 60%, transparent);
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a2) 22%, transparent), color-mix(in oklab, var(--a2) 7%, transparent));
+    }
+    .btn.ghost{ background: transparent; }
+
+    .btn.print{
+      border-color: color-mix(in oklab, var(--a) 62%, transparent);
+      background:
+        radial-gradient(220px 120px at 20% 20%, color-mix(in oklab, var(--a) 22%, transparent), transparent 60%),
+        radial-gradient(260px 140px at 85% 10%, color-mix(in oklab, var(--a2) 16%, transparent), transparent 65%),
+        linear-gradient(135deg, color-mix(in oklab, var(--panel) 82%, transparent), color-mix(in oklab, var(--panel2) 78%, transparent));
+    }
+    .btn.print:before{
+      content:"";
+      position:absolute; inset:-40% -30%;
+      background: radial-gradient(circle at 30% 35%, rgba(255,255,255,.16), transparent 48%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+
+    .ico{ width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center; opacity:.92; }
+    .ico svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .k{
+      font-family:var(--mono);
+      font-size: 11px;
+      opacity:.78;
+      border: 1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 10px;
+    }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: var(--sidebar) 1fr;
+      gap: 18px;
+      margin-top: 16px;
+      align-items:start;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position: sticky;
+      top: 96px;
+      z-index: 20;
+
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 2px);
+      background: color-mix(in oklab, var(--panel) 86%, transparent);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .side-top{
+      padding: 16px 14px 14px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(720px 180px at 20% 0%, color-mix(in oklab, var(--a) 16%, transparent), transparent 60%),
+        radial-gradient(720px 180px at 90% 0%, color-mix(in oklab, var(--a2) 12%, transparent), transparent 60%);
+      text-align:center;
+    }
+    .side-name{ margin:0; font-size: 16px; font-weight: 980; letter-spacing:.2px; }
+    .side-role{ margin: 7px 0 0; font-size: 12px; color: var(--muted); font-weight: 780; line-height:1.35; }
+
+    .side-body{ padding: 12px 12px 14px; text-align:left; }
+
+    .pill{
+      display:flex; align-items:flex-start; gap: 10px;
+      padding: 11px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 80%, transparent);
+      margin-bottom: 10px;
+    }
+    .pill .t{ min-width:0; display:flex; flex-direction:column; gap:2px; }
+    .pill .lbl{
+      font-size: 11px;
+      color: var(--muted2);
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .pill a, .pill span{
+      font-size: 12px;
+      color: var(--text);
+      text-decoration:none;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .pill a:hover{ text-decoration: underline; text-decoration-thickness: 1px; }
+
+    .quick{
+      display:flex; gap: 10px; flex-wrap:wrap;
+      margin: 8px 0 14px;
+    }
+    .quick .btn{ width:100%; justify-content:center; padding: 10px 12px; }
+
+    .nav{ display:grid; gap: 6px; margin-top: 6px; }
+    .nav a{
+      display:flex; align-items:center; justify-content:space-between; gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 12px;
+      transition: background .12s ease, border-color .12s ease, color .12s ease, transform .12s ease;
+    }
+    .nav a:hover{
+      background: color-mix(in oklab, var(--chip) 75%, transparent);
+      border-color: var(--line);
+      color: var(--text);
+      transform: translateX(1px);
+    }
+    .nav a.active{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a) 18%, transparent), transparent);
+      border-color: color-mix(in oklab, var(--a) 45%, transparent);
+      color: var(--text);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: color-mix(in oklab, var(--muted) 55%, transparent);
+    }
+    .nav a.active .dot{
+      background: linear-gradient(135deg, var(--a), var(--a2));
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--a) 12%, transparent);
+    }
+
+    /* Content cards */
+    .content{ min-width:0; }
+
+    .section{
+      position:relative;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 2px);
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      margin-bottom: 16px;
+    }
+    .fx{
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(900px 180px at 0% 0%, color-mix(in oklab, var(--a) 11%, transparent), transparent 60%),
+        radial-gradient(760px 160px at 100% 0%, color-mix(in oklab, var(--a2) 9%, transparent), transparent 55%);
+      opacity:.85;
+    }
+    .hd{
+      position:relative;
+      padding: 16px 16px 12px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 78%, transparent);
+    }
+    .hd h2{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hd .sub{
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: color-mix(in oklab, var(--text) 92%, transparent);
+      font-weight: 780;
+      max-width: 76ch;
+    }
+    .bd{ position:relative; padding: 14px 16px 16px; }
+
+    /* Hero */
+    .summary{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+      max-width: 90ch;
+    }
+
+    /* Experience accordion */
+    .acc{ display:grid; gap: 10px; }
+    .acc-item{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: color-mix(in oklab, var(--panel2) 85%, transparent);
+      overflow:hidden;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    [data-theme="light"] .acc-item{ box-shadow: 0 10px 22px rgba(2,6,23,.08); }
+    .acc-btn{
+      width:100%;
+      border:0;
+      background: transparent;
+      color: var(--text);
+      text-align:left;
+      padding: 14px 14px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 12px;
+      cursor:pointer;
+    }
+    .acc-title{ margin:0; font-size: 14px; font-weight: 980; letter-spacing:.08px; }
+    .acc-meta{ margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.35; }
+    .acc-right{ display:flex; flex-direction:column; align-items:flex-end; gap: 6px; flex-shrink:0; }
+    .date{ font-size: 12px; color: var(--muted); font-family: var(--mono); text-align:right; }
+    .chev{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--chip);
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .18s ease;
+    }
+    .acc-item[aria-expanded="true"] .chev{ transform: rotate(180deg); }
+    .acc-panel{
+      max-height: 0;
+      overflow:hidden;
+      transition: max-height .25s ease;
+      border-top: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+    }
+    .acc-panel .inner{ padding: 12px 16px 14px; }
+    .bullets{
+      margin: 0 0 0 18px;
+      padding: 0;
+      color: color-mix(in oklab, var(--text) 92%, transparent);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .bullets li{ margin: 6px 0; }
+
+    /* Skills */
+    .filters{ display:flex; gap: 8px; flex-wrap: wrap; }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 950;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); border-color: color-mix(in oklab, var(--text) 18%, transparent); }
+    .chip.active{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a) 18%, transparent), transparent);
+      border-color: color-mix(in oklab, var(--a) 45%, transparent);
+    }
+
+    .skill-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .skill-card{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: color-mix(in oklab, var(--panel2) 85%, transparent);
+      padding: 12px 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .skill-card h3{ margin:0; font-size: 13px; font-weight: 1000; }
+    .skill-list{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.65;
+    }
+    .skill-list li{ margin: 5px 0; }
+    .mini{
+      display:flex; flex-wrap:wrap; gap: 8px;
+      margin-top: 2px;
+    }
+    .mini span{
+      font-size: 11.5px;
+      font-weight: 900;
+      color: color-mix(in oklab, var(--text) 92%, transparent);
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--chip) 90%, transparent);
+      padding: 6px 8px;
+      border-radius: 999px;
+    }
+
+    .skills-empty{
+      border: 1px dashed color-mix(in oklab, var(--line) 90%, transparent);
+      border-radius: var(--r);
+      background: color-mix(in oklab, var(--panel2) 60%, transparent);
+      padding: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      grid-column: 1 / -1;
+    }
+    .skills-empty b{ color: color-mix(in oklab, var(--text) 92%, transparent); }
+
+    #skillGrid.skills-view{ grid-template-columns: 1fr; }
+    #skillGrid.skills-view .skill-card{
+      grid-column: 1 / -1;
+      padding: 14px 14px;
+    }
+
+    /* Education */
+    .edu{ display:grid; gap: 10px; }
+    .edu-item{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: color-mix(in oklab, var(--panel2) 85%, transparent);
+      padding: 14px 14px;
+    }
+    .edu-title{
+      margin:0;
+      font-size: 14px;
+      font-weight: 1000;
+      letter-spacing:.08px;
+    }
+    .edu-meta{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.55;
+    }
+    .edu-meta b{ color: color-mix(in oklab, var(--text) 92%, transparent); }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      padding: 18px;
+      z-index: 80;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+    }
+    .modal.open{ display:flex; }
+    .modal-card{
+      width: min(650px, 100%);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 2px);
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modal-hd{
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap: 12px;
+      background: color-mix(in oklab, var(--panel2) 78%, transparent);
+    }
+    .modal-hd h3{ margin:0; font-size: 14px; font-weight: 1000; }
+    .modal-bd{ padding: 14px 14px 16px; }
+    .field{ display:grid; gap: 6px; margin-bottom: 12px; }
+    .field label{
+      font-size: 11px; letter-spacing:.14em; text-transform:uppercase;
+      color: var(--muted2); font-weight: 950;
+    }
+    .field input, .field textarea{
+      width:100%;
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 82%, transparent);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 13px;
+      outline:none;
+    }
+    .field textarea{ min-height: 110px; resize: vertical; }
+    .modal-ft{ display:flex; gap: 10px; justify-content:flex-end; padding-top: 6px; }
+
+    /* Toasts */
+    .toasts{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display:grid;
+      gap: 10px;
+      z-index: 90;
+    }
+    .toast{
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 90%, transparent);
+      border-radius: 16px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow2);
+      min-width: 260px;
+      animation: pop .18s ease;
+    }
+    .toast .t{ font-weight: 980; font-size: 12.5px; margin:0; }
+    .toast .d{ margin: 4px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    @keyframes pop{ from{ transform: translateY(6px); opacity:0; } to{ transform: translateY(0); opacity:1; } }
+
+    /* Floating Top button */
+    .fab{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 85;
+      display:none;
+    }
+    .fab.show{ display:block; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .sidebar{ position: relative; top: 0; }
+      .skill-grid{ grid-template-columns: 1fr; }
+      .quick .btn{ width:auto; flex:1; }
+      .side-top{ text-align:left; }
+      .avatar-lg{ margin: 0 0 10px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+    }
+
+    /* ===========================
+       PRINT / SAVE AS PDF
+       =========================== */
+    @media print{
+      @page{
+        size: A4;
+        margin: 12mm;
+      }
+
+      *{
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body{ background:#ffffff !important; }
+      body{ color:#0f172a !important; overflow: visible !important; }
+
+      .chrome{ display:none !important; }
+
+      *{
+        box-shadow:none !important;
+        text-shadow:none !important;
+        backdrop-filter:none !important;
+        filter:none !important;
+      }
+
+      .wrap{ max-width: 100% !important; padding: 0 !important; }
+
+      .topbar{ position: static !important; top:auto !important; }
+      .sidebar{ position: static !important; top:auto !important; }
+
+      .grid{
+        grid-template-columns: 300px 1fr !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+      }
+
+      /* Hide interactive UI */
+      .actions, .quick, .nav, .fab, .toasts, .modal,
+      #skillFilters, #btnClearSkills{
+        display:none !important;
+      }
+
+      /* Clean cards */
+      .section, .sidebar{
+        background:#ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 12px !important;
+      }
+      .fx{ display:none !important; }
+      .hd{
+        background:#ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+      }
+
+      /* Strong readable text */
+      .brand h1, .side-name, .acc-title, .edu-title, .skill-card h3{
+        color:#0f172a !important;
+      }
+      .muted, .muted2, .side-role, .summary, .skill-list, .acc-meta, .date, .edu-meta{
+        color:#334155 !important;
+      }
+
+      a{ color:#0f172a !important; text-decoration:none !important; }
+
+      a[href^="mailto:"]::after{
+        content:"  (" attr(href) ")";
+        font-size: 10px;
+        color:#64748b;
+      }
+      a[href^="tel:"]::after{
+        content:"  (" attr(href) ")";
+        font-size: 10px;
+        color:#64748b;
+      }
+
+      .pill{
+        background:#ffffff !important;
+        border: 1px solid #e5e7eb !important;
+      }
+
+      /* Expand all accordions on print */
+      .acc-panel{
+        max-height: none !important;
+        overflow: visible !important;
+        background:#ffffff !important;
+        border-top: 1px solid #e5e7eb !important;
+      }
+      .chev{ display:none !important; }
+
+      /* Skills: show all */
+      #skillsEmpty{ display:none !important; }
+      #skillGrid{ grid-template-columns: 1fr !important; }
+      #skillGrid .skill-card{ display:grid !important; }
+
+      /* Prevent ugly page breaks */
+      .section, .acc-item, .edu-item, .skill-card, .pill{
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .hd{
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+  <div class="chrome" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="topbar" aria-label="Top bar">
+      <div class="brand">
+        <img class="avatar" src="profile.png" alt="Giuzwald Balallo profile photo" />
+        <div>
+          <h1>Giuzwald Balallo</h1>
+          <p>IT Specialist</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="btnTheme" title="Toggle theme (T)" type="button">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3v2"/><path d="M12 19v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M3 12h2"/><path d="M19 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/></svg>
+          </span>
+          Theme <span class="k">T</span>
+        </button>
+
+        <button class="btn good" id="btnContact" type="button">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          </span>
+          Contact
+        </button>
+
+        <!-- PDF buttons -->
+        <button class="btn print" id="btnOpenPDF" type="button" data-pdf="Giuzwald_Balallo_CV.pdf" title="Open resume PDF">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 9V4h12v5"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v6H6z"/></svg>
+          </span>
+          Open PDF
+        </button>
+
+        <button class="btn good" id="btnDownloadPDF" type="button" data-pdf="Giuzwald_Balallo_CV.pdf" data-name="Giuzwald_Balallo_CV.pdf" title="Download resume PDF">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          </span>
+          Download PDF
+        </button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="side-top">
+          <img class="avatar-lg" src="profile.png" alt="Giuzwald Balallo profile photo" />
+          <h2 class="side-name">GIUZWALD BALALLO</h2>
+          <p class="side-role">IT Specialist • IT Field Engineer • End-User &amp; Network Support</p>
+        </div>
+
+        <div class="side-body">
+          <div class="pill">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11Z"/><path d="M12 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+            </span>
+            <div class="t">
+              <div class="lbl">Address</div>
+              <span>319 Purok 6 Brgy. Ganado, Biñan City, Laguna 4024</span>
+            </div>
+          </div>
+
+          <div class="pill">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.1 10.8 19.8 19.8 0 0 1 0 2.2 2 2 0 0 1 2 0h3a2 2 0 0 1 2 1.7c.1.8.3 1.6.6 2.4a2 2 0 0 1-.5 2.1L6.1 7.1a16 16 0 0 0 10.8 10.8l.9-1a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.4.6A2 2 0 0 1 22 16.9Z"/></svg>
+            </span>
+            <div class="t">
+              <div class="lbl">Phone</div>
+              <a href="tel:+639693140418">0969-314-0418</a>
+            </div>
+          </div>
+
+          <div class="pill">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>
+            </span>
+            <div class="t">
+              <div class="lbl">Email</div>
+              <a href="mailto:waldxbalallo@gmail.com">waldxbalallo@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="quick">
+            <button class="btn good" id="btnCopyEmail" type="button">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 4h10v14H8z"/><path d="M6 6H4v14h10v-2"/></svg>
+              </span>
+              Copy Email
+            </button>
+            <button class="btn good" id="btnCopyPhone" type="button">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 4h10v14H8z"/><path d="M6 6H4v14h10v-2"/></svg>
+              </span>
+              Copy Phone
+            </button>
+          </div>
+
+          <nav class="nav" aria-label="Navigation">
+            <a class="navlink active" href="#about"><span>Profile</span><span class="dot"></span></a>
+            <a class="navlink" href="#experience"><span>Experience</span><span class="dot"></span></a>
+            <a class="navlink" href="#skills"><span>Skills</span><span class="dot"></span></a>
+            <a class="navlink" href="#education"><span>Education</span><span class="dot"></span></a>
+            <a class="navlink" href="#references"><span>References</span><span class="dot"></span></a>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="content" aria-label="Resume content">
+        <section class="section" id="about">
+          <div class="fx" aria-hidden="true"></div>
+          <header class="hd">
+            <div>
+              <h2>Profile</h2>
+              <p class="sub"></p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnViewExperience" type="button">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                </span>
+                Experience
+              </button>
+            </div>
+          </header>
+          <div class="bd">
+            <p class="summary">
+              IT professional with experience in hardware/software troubleshooting, network device configuration,
+              and end-user support. Skilled in maintaining desktops/laptops/printers, setting up connectivity and VPN access,
+              and assisting operations teams through ticket handling, cybersecurity best practices, and clear documentation.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="experience">
+          <div class="fx" aria-hidden="true"></div>
+          <header class="hd">
+            <div>
+              <h2>Experience</h2>
+              <p class="sub">Click a role to expand. Use buttons to expand/collapse all.</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnExpandAll" type="button">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                </span>
+                Expand
+              </button>
+              <button class="btn" id="btnCollapseAll" type="button">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+                </span>
+                Collapse
+              </button>
+            </div>
+          </header>
+
+          <div class="bd">
+            <div class="acc">
+              <div class="acc-item" aria-expanded="true">
+                <button class="acc-btn" type="button">
+                  <div>
+                    <p class="acc-title">IT Specialist</p>
+                    <p class="acc-meta">Fast Logistics Corporation</p>
+                  </div>
+                  <div class="acc-right">
+                    <div class="date">Jul 2024 — Present</div>
+                    <div class="chev" aria-hidden="true">
+                      <span class="ico"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+                    </div>
+                  </div>
+                </button>
+                <div class="acc-panel">
+                  <div class="inner">
+                    <ul class="bullets">
+                      <li>Provide technical support and maintenance for hardware, software, and network systems (desktops, laptops, printers, and IT tools).</li>
+                      <li>Configure and troubleshoot network devices and infrastructure, including Cisco/managed switches, servers, routers, and VPN connections.</li>
+                      <li>Manage user accounts, apply cybersecurity practices, handle IT support tickets, and assist in system upgrades and IT projects.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acc-item" aria-expanded="false">
+                <button class="acc-btn" type="button">
+                  <div>
+                    <p class="acc-title">IT Field Engineer / IT Field Engineer Intern</p>
+                    <p class="acc-meta">5L Solutions Supply &amp; Allied Services Corp.</p>
+                  </div>
+                  <div class="acc-right">
+                    <div class="date">Aug 2023 — Jul 2024 (Intern: Mar 2023 — Jul 2023)</div>
+                    <div class="chev" aria-hidden="true">
+                      <span class="ico"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+                    </div>
+                  </div>
+                </button>
+                <div class="acc-panel">
+                  <div class="inner">
+                    <ul class="bullets">
+                      <li>Maintained and isolated ITDs for 7-Eleven sites.</li>
+                      <li>Performed preloading and file backups for 7-Eleven ITDs to support continuity and deployment readiness.</li>
+                      <li>Set up internet connection of Apollo Company for 7-Eleven.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acc-item" aria-expanded="false">
+                <button class="acc-btn" type="button">
+                  <div>
+                    <p class="acc-title">Sales and Marketing Assistant</p>
+                    <p class="acc-meta">One Life Cycle Motorcycle Trading</p>
+                  </div>
+                  <div class="acc-right">
+                    <div class="date">May 2021 — Oct 2021</div>
+                    <div class="chev" aria-hidden="true">
+                      <span class="ico"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+                    </div>
+                  </div>
+                </button>
+                <div class="acc-panel">
+                  <div class="inner">
+                    <ul class="bullets">
+                      <li>Conducted research on industry trends, competitors, target audience demographics, and customer preferences to support marketing strategies and campaigns.</li>
+                      <li>Responded to sales inquiries and customer requests promptly and professionally.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="skills">
+          <div class="fx" aria-hidden="true"></div>
+          <header class="hd">
+            <div>
+              <h2>Skills</h2>
+              <p class="sub">Choose a category to view its full details.</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnClearSkills" type="button">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>
+                </span>
+                Clear
+              </button>
+            </div>
+          </header>
+
+          <div class="bd">
+            <div class="filters" id="skillFilters" aria-label="Skill filters">
+              <span class="chip" data-filter="support">Support</span>
+              <span class="chip" data-filter="network">Network</span>
+              <span class="chip" data-filter="hardware">Hardware</span>
+              <span class="chip" data-filter="office">Office</span>
+              <span class="chip" data-filter="dev">Dev Basics</span>
+              <span class="chip" data-filter="soft">Soft Skills</span>
+            </div>
+
+            <div class="skill-grid" id="skillGrid">
+              <div class="skills-empty" id="skillsEmpty">
+                <b>Select a category</b> above to view skills.<br/>
+                Tip: click the same chip again to hide it, or press <b>Clear</b>.
+              </div>
+
+              <div class="skill-card" data-tags="support">
+                <h3>IT Support</h3>
+                <ul class="skill-list">
+                  <li>End-user troubleshooting (Windows apps, common errors, access issues)</li>
+                  <li>Incident triage and ticket handling (prioritization, updates, handoff)</li>
+                  <li>Remote/onsite support workflow and clear documentation of fixes</li>
+                  <li>VPN connectivity assistance and user guidance</li>
+                  <li>Basic cybersecurity hygiene (password practices, safe handling, awareness)</li>
+                </ul>
+                <div class="mini">
+                  <span>Troubleshooting</span><span>Ticketing</span><span>Documentation</span><span>User Support</span>
+                </div>
+              </div>
+
+              <div class="skill-card" data-tags="network">
+                <h3>Networking</h3>
+                <ul class="skill-list">
+                  <li>Connectivity troubleshooting (IP/DNS, gateway, basic routing symptoms)</li>
+                  <li>Basic switch concepts and configuration exposure (Cisco/managed switches)</li>
+                  <li>Using tools: ping, ipconfig/ifconfig, traceroute (basic)</li>
+                  <li>VPN basics and common connection checks</li>
+                </ul>
+                <div class="mini">
+                  <span>Switch</span><span>VPN</span><span>IP/DNS</span><span>Diagnostics</span>
+                </div>
+              </div>
+
+              <div class="skill-card" data-tags="hardware">
+                <h3>Hardware &amp; Peripherals</h3>
+                <ul class="skill-list">
+                  <li>Desktop/laptop setup, maintenance, and basic troubleshooting</li>
+                  <li>Peripheral support (printers, scanners, displays)</li>
+                  <li>Basic imaging/preloading and file backup workflow</li>
+                  <li>Asset handling and careful deployment practices</li>
+                </ul>
+                <div class="mini">
+                  <span>Laptops/PCs</span><span>Printers</span><span>Backups</span><span>Deployment</span>
+                </div>
+              </div>
+
+              <div class="skill-card" data-tags="office">
+                <h3>Productivity &amp; Office Tools</h3>
+                <ul class="skill-list">
+                  <li>Microsoft Office (Word, Excel, PowerPoint) for reports and documentation</li>
+                  <li>Creating SOPs, quick guides, and troubleshooting notes</li>
+                  <li>Basic data handling and organizing logs/spreadsheets</li>
+                </ul>
+                <div class="mini">
+                  <span>Word</span><span>Excel</span><span>PowerPoint</span><span>SOPs</span>
+                </div>
+              </div>
+
+              <div class="skill-card" data-tags="dev">
+                <h3>Development Basics</h3>
+                <ul class="skill-list">
+                  <li>HTML &amp; CSS fundamentals (layout, responsive basics)</li>
+                  <li>Basic programming exposure: Visual Basic .NET and Java</li>
+                  <li>Comfortable reading simple code and following technical documentation</li>
+                </ul>
+                <div class="mini">
+                  <span>HTML</span><span>CSS</span><span>VB .NET</span><span>Java</span>
+                </div>
+              </div>
+
+              <div class="skill-card" data-tags="soft">
+                <h3>Soft Skills</h3>
+                <ul class="skill-list">
+                  <li>Clear communication with users (non-technical explanations)</li>
+                  <li>Professionalism under pressure and customer-first mindset</li>
+                  <li>Coordination with teams and stakeholders</li>
+                  <li>Time management and prioritization across requests</li>
+                  <li>Attention to detail in documentation</li>
+                </ul>
+                <div class="mini">
+                  <span>Communication</span><span>Prioritization</span><span>Coordination</span><span>Professional</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="education">
+          <div class="fx" aria-hidden="true"></div>
+          <header class="hd">
+            <div>
+              <h2>Education</h2>
+              <p class="sub">Academic background.</p>
+            </div>
+          </header>
+
+          <div class="bd">
+            <div class="edu">
+              <div class="edu-item">
+                <p class="edu-title">Bachelor of Science in Information Technology</p>
+                <p class="edu-meta"><b>Polytechnic University of the Philippines — Biñan Campus</b><br/>Graduated: 2023</p>
+              </div>
+
+              <div class="edu-item">
+                <p class="edu-title">Senior High School — Information and Communication Technology (ICT)</p>
+                <p class="edu-meta"><b>Colegio de San Pedro</b><br/>Graduated: 2019</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="references">
+          <div class="fx" aria-hidden="true"></div>
+          <header class="hd">
+            <div>
+              <h2>References</h2>
+              <p class="sub">Contacts available upon request (or keep contacts below).</p>
+            </div>
+          </header>
+
+          <div class="bd">
+            <div class="skill-grid">
+              <div class="skill-card">
+                <h3>Chiqui Rose D. Carolino</h3>
+                <ul class="skill-list" style="margin-top:8px">
+                  <li>Training Coordinator / Creative &amp; Marketing Designer</li>
+                  <li><a href="tel:+639177710112">0917-771-0112</a></li>
+                  <li><a href="mailto:chiqscarolino@gmail.com">chiqscarolino@gmail.com</a></li>
+                </ul>
+              </div>
+
+              <div class="skill-card">
+                <h3>Almira B. Abante</h3>
+                <ul class="skill-list" style="margin-top:8px">
+                  <li>Fast Logistics Corporation — Documentation Supervisor</li>
+                  <li><a href="tel:+639513551765">0951-355-1765</a></li>
+                  <li><a href="mailto:miraabante27@gmail.com">miraabante27@gmail.com</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="fab" id="fab">
+    <button class="btn" id="btnTop" title="Back to top" type="button">
+      <span class="ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      </span>
+      Top
+    </button>
+  </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-hd">
+        <h3 id="modalTitle">Contact Giuzwald</h3>
+        <button class="btn" id="btnCloseModal" type="button">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+          </span>
+          Close
+        </button>
+      </div>
+      <div class="modal-bd">
+        <div class="field">
+          <label>Subject</label>
+          <input id="subj" value="Interview Invitation — IT Specialist" />
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea id="msg">Hi Giuzwald,
+
+We reviewed your profile and would like to invite you for an interview. Please share your availability this week.
+
+Thanks,</textarea>
+        </div>
+        <div class="modal-ft">
+          <button class="btn good" id="btnEmailNow" type="button">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>
+            </span>
+            Open Email Draft
+          </button>
+          <button class="btn primary" id="btnCopyDraft" type="button">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 4h10v14H8z"/><path d="M6 6H4v14h10v-2"/></svg>
+            </span>
+            Copy Draft
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* =========
+       * DOM helpers
+       * ========= */
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+      /* =========
+       * Toasts
+       * ========= */
+      function toast(title, message) {
+        const host = $("#toasts");
+        if (!host) return;
+
+        const el = document.createElement("div");
+        el.className = "toast";
+        el.innerHTML = `<p class="t">${title}</p><p class="d">${message}</p>`;
+        host.appendChild(el);
+
+        setTimeout(() => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(6px)";
+          setTimeout(() => el.remove(), 220);
+        }, 1600);
+      }
+
+      /* =========
+       * Clipboard
+       * ========= */
+      async function copyToClipboard(text, successMsg) {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        toast("Copied", successMsg || text);
+      }
+
+      /* =========
+       * Theme
+       * ========= */
+      const THEME_KEY = "resume_theme";
+
+      function setTheme(theme) {
+        document.body.setAttribute("data-theme", theme);
+        localStorage.setItem(THEME_KEY, theme);
+      }
+
+      function toggleTheme() {
+        const current = document.body.getAttribute("data-theme");
+        setTheme(current === "light" ? "dark" : "light");
+      }
+
+      /* =========
+       * Scrolling
+       * ========= */
+      function scrollToId(id) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      /* =========
+       * Accordion
+       * ========= */
+      function setAccordionItem(item, expanded) {
+        item.setAttribute("aria-expanded", expanded ? "true" : "false");
+        const panel = item.querySelector(".acc-panel");
+        if (!panel) return;
+        panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : "0px";
+      }
+
+      function initAccordions() {
+        $$(".acc-item").forEach((item) => {
+          const btn = item.querySelector(".acc-btn");
+          const isExpanded = item.getAttribute("aria-expanded") === "true";
+          setAccordionItem(item, isExpanded);
+
+          btn?.addEventListener("click", () => {
+            const now = item.getAttribute("aria-expanded") === "true";
+            setAccordionItem(item, !now);
+          });
+        });
+
+        window.addEventListener("resize", () => {
+          $$(".acc-item[aria-expanded='true']").forEach((item) => {
+            const panel = item.querySelector(".acc-panel");
+            if (panel) panel.style.maxHeight = `${panel.scrollHeight}px`;
+          });
+        });
+      }
+
+      function expandAllAccordions(expand) {
+        $$(".acc-item").forEach((item) => setAccordionItem(item, expand));
+      }
+
+      /* =========
+       * Skills filter
+       * ========= */
+      let activeSkillFilter = null;
+
+      function applySkillFilter(filter) {
+        activeSkillFilter = filter;
+
+        $$("#skillFilters .chip").forEach((chip) => {
+          chip.classList.toggle("active", chip.dataset.filter === filter);
+        });
+
+        const empty = $("#skillsEmpty");
+        const grid = $("#skillGrid");
+        const cards = $$("#skillGrid .skill-card");
+        if (!empty || !grid) return;
+
+        grid.classList.toggle("skills-view", Boolean(filter));
+
+        if (!filter) {
+          empty.style.display = "";
+          cards.forEach((card) => (card.style.display = "none"));
+          return;
+        }
+
+        empty.style.display = "none";
+        cards.forEach((card) => {
+          const tags = (card.getAttribute("data-tags") || "").split(/\s+/).filter(Boolean);
+          card.style.display = tags.includes(filter) ? "" : "none";
+        });
+      }
+
+      /* =========
+       * Section spy
+       * ========= */
+      function initSectionSpy() {
+        const links = $$(".navlink");
+        const sections = links
+          .map((a) => document.querySelector(a.getAttribute("href")))
+          .filter(Boolean);
+
+        if (!sections.length) return;
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((e) => e.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+            if (!visible) return;
+
+            const activeId = `#${visible.target.id}`;
+            links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === activeId));
+          },
+          { threshold: [0.25, 0.45, 0.6] }
+        );
+
+        sections.forEach((s) => io.observe(s));
+      }
+
+      /* =========
+       * Modal
+       * ========= */
+      function openModal() {
+        $("#modal")?.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        $("#modal")?.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* =========
+       * Floating button
+       * ========= */
+      function initFab() {
+        const fab = $("#fab");
+        if (!fab) return;
+        const onScroll = () => fab.classList.toggle("show", window.scrollY > 600);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
+
+      /* =========
+       * PDF open + reliable download
+       * ========= */
+      function getPdfUrl(fromEl) {
+        return fromEl?.dataset?.pdf || "Giuzwald_Balallo_CV.pdf";
+      }
+
+      function openPdf(fromEl) {
+        const pdfUrl = getPdfUrl(fromEl);
+        window.open(pdfUrl, "_blank", "noopener");
+      }
+
+      async function downloadPdf(fromEl) {
+        const pdfUrl = getPdfUrl(fromEl);
+        const filename = fromEl?.dataset?.name || "Giuzwald_Balallo_CV.pdf";
+
+        try {
+          const res = await fetch(pdfUrl, { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+          const blob = await res.blob();
+          const objUrl = URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = objUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+
+          URL.revokeObjectURL(objUrl);
+          toast("Download started", filename);
+        } catch {
+          toast("Download fallback", "Opening PDF instead (hosting may block direct download).");
+          openPdf(fromEl);
+        }
+      }
+
+      /* =========
+       * Print lifecycle
+       * ========= */
+      const printState = { theme: null, skillFilter: null, expanded: [] };
+
+      function prepareForPrint() {
+        printState.theme = document.body.getAttribute("data-theme");
+        printState.skillFilter = activeSkillFilter;
+        printState.expanded = $$(".acc-item").map((i) => i.getAttribute("aria-expanded") === "true");
+
+        setTheme("light");
+        expandAllAccordions(true);
+
+        $("#skillsEmpty").style.display = "none";
+        $("#skillGrid").classList.remove("skills-view");
+        $$("#skillGrid .skill-card").forEach((card) => (card.style.display = ""));
+
+        closeModal();
+      }
+
+      function restoreAfterPrint() {
+        $$(".acc-item").forEach((item, idx) => setAccordionItem(item, Boolean(printState.expanded[idx])));
+        applySkillFilter(printState.skillFilter);
+        if (printState.theme) setTheme(printState.theme);
+      }
+
+      /* =========
+       * Event bindings
+       * ========= */
+      function bindEvents() {
+        $$(".navlink").forEach((a) => {
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            scrollToId(a.getAttribute("href").slice(1));
+          });
+        });
+
+        $("#btnTheme")?.addEventListener("click", toggleTheme);
+        $("#btnContact")?.addEventListener("click", openModal);
+
+        $("#btnCopyEmail")?.addEventListener("click", () => copyToClipboard("waldxbalallo@gmail.com", "Email copied"));
+        $("#btnCopyPhone")?.addEventListener("click", () => copyToClipboard("0969-314-0418", "Phone copied"));
+
+        $("#btnViewExperience")?.addEventListener("click", () => scrollToId("experience"));
+
+        $("#btnExpandAll")?.addEventListener("click", () => expandAllAccordions(true));
+        $("#btnCollapseAll")?.addEventListener("click", () => expandAllAccordions(false));
+
+        $$("#skillFilters .chip").forEach((chip) => {
+          chip.addEventListener("click", () => {
+            const f = chip.dataset.filter;
+            applySkillFilter(activeSkillFilter === f ? null : f);
+          });
+        });
+        $("#btnClearSkills")?.addEventListener("click", () => applySkillFilter(null));
+
+        $("#btnCloseModal")?.addEventListener("click", closeModal);
+        $("#modal")?.addEventListener("click", (e) => {
+          if (e.target?.id === "modal") closeModal();
+        });
+
+        $("#btnEmailNow")?.addEventListener("click", () => {
+          const subject = encodeURIComponent($("#subj")?.value || "");
+          const body = encodeURIComponent($("#msg")?.value || "");
+          window.open(`mailto:waldxbalallo@gmail.com?subject=${subject}&body=${body}`, "_blank", "noopener");
+        });
+
+        $("#btnCopyDraft")?.addEventListener("click", () => {
+          const subject = $("#subj")?.value || "";
+          const body = $("#msg")?.value || "";
+          copyToClipboard(`Subject: ${subject}\n\n${body}`, "Draft copied");
+        });
+
+        $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        $("#btnOpenPDF")?.addEventListener("click", (e) => openPdf(e.currentTarget));
+        $("#btnDownloadPDF")?.addEventListener("click", (e) => downloadPdf(e.currentTarget));
+
+        window.addEventListener("beforeprint", prepareForPrint);
+        window.addEventListener("afterprint", restoreAfterPrint);
+
+        window.addEventListener("keydown", (e) => {
+          const key = e.key.toLowerCase();
+
+          if (key === "t" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            e.preventDefault();
+            toggleTheme();
+          }
+
+          if (key === "escape") closeModal();
+
+          if ((e.ctrlKey || e.metaKey) && key === "p") prepareForPrint();
+        });
+      }
+
+      /* =========
+       * Init
+       * ========= */
+      function init() {
+        setTheme(localStorage.getItem(THEME_KEY) || "dark");
+        initAccordions();
+        initSectionSpy();
+        initFab();
+        applySkillFilter(null);
+        bindEvents();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
